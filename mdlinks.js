@@ -1,24 +1,3 @@
-//funcion
-/* 
-export const mdLinks =  (path, options) => {
-
-    const existeRuta = determinarExistencia(ruta);
-    if(existeRuta){
-        //algo
-        const esAbsoluta = esAbsoluta(ruta);
-        if(!esAbsoluta){
-            const nuevaRuta = convertorAbsoluta(ruta); 
-        }
-
-         const contenido = leerArchivo(nuevaRuta) // es asincrono? 
-         extraerLinks(contenido)
-    }
-    else{
-        //haga esto
-    }
-
-}
-leerArchivo(nuevaRuta) */
 import path from 'path';
 import fs from 'fs';
 
@@ -85,13 +64,25 @@ const leerArchivo = (ruta) => {
   });
 };
 
-const extraerLinks = (contenido, archivo) => {
+const extraerLinks = (contenido) => {
   // Lógica para extraer los links del contenido del archivo
   // Retorna un array de objetos con los campos href, text y file
   const links = [
-    { href: 'https://example.com', text: 'Link de ejemplo', file: archivo },
-    { href: 'https://google.com', text: 'Google', file: archivo },
-    { href: 'https://openai.com', text: 'OpenAI', file: archivo }
+    {
+      href: "https://es.wikipedia.org/wiki/Markdown",
+      text: "Markdown",
+      file: "ejemplo.md",
+    },
+    {
+      href: "https://nodejs.org",
+      text: "Node.js",
+      file: "ejemplo.md",
+    },
+    {
+      href: "https://developers.google.com/v8/",
+      text: "motor de JavaScript V8 de Chrome",
+      file: "ejemplo.md",
+    }
   ];
   return links;
 };
