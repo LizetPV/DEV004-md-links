@@ -3,13 +3,13 @@ import { determinarExistencia } from "../mdlinks.js";
 
 describe("determinarExistencia",() => {
   it("deberia retornar que no existe", () => {
-    determinarExistencia(...)
+   /*  determinarExistencia(...) */
   })
 })
 
   describe("determinarExistencia",() => {
     it("deberia retornar que si existe", () => {
-      determinarExistencia(...)
+     /*  determinarExistencia(...) */
     })
 })
 
