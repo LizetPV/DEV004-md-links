@@ -3,7 +3,6 @@ import fs from 'fs';
 
 import { logSuccess, logWarning, logError, logResultsBox} from './logger.js';
 
-
 export const mdLinks = (ruta, options) => {
   return new Promise((resolve, reject) => {
     determinarExistencia(ruta)
@@ -23,7 +22,6 @@ export const mdLinks = (ruta, options) => {
       })
       .then((contenido) => {
         const links = extraerLinks(contenido,ruta); // Pasa el nombre del archivo a extraerLinks
-        logResultsBox(links); // Muestra los resultados en la consola usando logResultsBox
         resolve(links);
       })
       .catch((error) => {

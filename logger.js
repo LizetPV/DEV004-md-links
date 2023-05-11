@@ -18,9 +18,8 @@ export const logResultsBox = (links) => {
   output.push('Links encontrados:');
   links.forEach((link) => {
     const { href, text, file } = link;
-    output.push(`- ${href} (${text}) - Archivo: ${file}`);
+    output.push(`href: ${href} text:(${text})  file: ${file}`);
   });
-
   const line = '═'.repeat(output[0].length);
   const box = [
     `╔${line}╗`,
