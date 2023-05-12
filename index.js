@@ -9,7 +9,7 @@ const procesarLinks = (links) => {
 };
   
 // Llamar a la función mdLinks con la ruta y opciones deseadas
-const ruta = '/ruta/a/validar';
+const ruta = './PRUEBAS';
 const opciones = {};
 
 mdLinks(ruta, opciones)
