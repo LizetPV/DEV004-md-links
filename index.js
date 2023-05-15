@@ -1,21 +1,22 @@
 //comando
-import { mdLinks } from "./mdlinks.js";
-import { logResultsBox } from "./logger.js";
+import leerArchivo from './mdlinks.js';
+import { obtenerExtensionArchivo } from './mdlinks.js';
 
-// Función para procesar los resultados de los links
-const procesarLinks = (links) => {
-  logResultsBox(links); // Muestra los resultados en la consola usando logResultsBox
-  
-};
-  
-// Llamar a la función mdLinks con la ruta y opciones deseadas
-const ruta = './PRUEBAS';
-const opciones = {};
+const rutaArchivo = './ejemplo.md';
 
-mdLinks(ruta, opciones)
-  .then((links) => {
-    procesarLinks(links);
-  })
-  .catch((error) => {
+leerArchivo(rutaArchivo, (error, data) => {
+  if (error) {
     console.error(error);
-  });
+    return;
+  }
+  
+  console.log(data);
+});
+
+const ruta = './ejemplo.md';
+try {
+  const extension = obtenerExtensionArchivo(ruta);
+  console.log(`La extensión del archivo es: ${extension}`);
+} catch (error) {
+  console.error(error);
+}
