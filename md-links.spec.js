@@ -1,5 +1,7 @@
-import { mdLinks } from "../mdlinks.js";
-import { determinarExistencia } from "../mdlinks.js";
+import { mdLinks } from "./mdlinks.js";
+import { leerArchivo, validarURL } from "./index.js";
+
+
 
 describe("determinarExistencia",() => {
   it("deberia retornar que no existe", () => {

@@ -3,6 +3,7 @@ import { readFile } from 'fs';
 import { statSync } from 'fs';
 import { extname } from 'path';
 import { readdirSync } from 'fs';
+import chalk from 'chalk';
 
 const leerArchivo = (rutaArchivo, callback) => {
   readFile(rutaArchivo, 'utf8', (error, data) => {
@@ -10,7 +11,7 @@ const leerArchivo = (rutaArchivo, callback) => {
       callback(error);
       return;
     }
-    
+
     callback(null, data);
   });
 };
@@ -26,11 +27,12 @@ export const obtenerExtensionArchivo = (ruta) => {
     } else {
       throw new Error('La ruta no corresponde a un archivo');
     }
+
   } catch (error) {
     throw error;
   }
 };
-
+ 
 
 export const obtenerContenidoDirectorio = (rutaDirectorio) => {
   try {
@@ -39,4 +41,4 @@ export const obtenerContenidoDirectorio = (rutaDirectorio) => {
   } catch (error) {
     throw error;
   }
-};
+}; 
