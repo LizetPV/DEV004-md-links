@@ -1,47 +1,25 @@
-import { mdLinks } from "./mdlinks.js";
+import { mdLinks, obtenerTipoContenido } from "./mdlinks.js";
 import { leerArchivo, validarURL } from "./index.js";
+import axios from "axios";
+jest.mock("axios");
 
-
-
-describe("determinarExistencia",() => {
-  it("deberia retornar que no existe", () => {
-   /*  determinarExistencia(...) */
-  })
-})
-
-  describe("determinarExistencia",() => {
-    it("deberia retornar que si existe", () => {
-     /*  determinarExistencia(...) */
-    })
-})
-
-describe('mdLinks', () => {
-
-  it('mdLinks procesa  un solo archivo con 3 links', () => {
-    const ruta = "ejemplo.md";
-
-    return mdLinks(ruta, { validate: false })
-      .then(
-        (Array) => {
-          expect(Array).toEqual([
-            {
-              href: "https://es.wikipedia.org/wiki/Markdown",
-              text: "Markdown",
-              file: "ejemplo.md",
-            },
-            {
-              href: "https://nodejs.org",
-              text: "Node.js",
-              file: "ejemplo.md",
-            },
-            {
-              href: "https://developers.google.com/v8/",
-              text: "motor de JavaScript V8 de Chrome",
-              file: "ejemplo.md",
-            }
-          ])
-        }
-      )
+describe('obtenerTipoContenido', () => {
+  test('debe retornar los tipos de contenido correctamente', () => {
+    const resultados = obtenerTipoContenido('./PRUEBAS/ejemplo.md');
+    expect(resultados).toEqual([
+      { tipo: 'href', texto: 'Markdown', enlace: 'https://es.wikipedia.org/wiki/Markdown' },
+      { tipo: 'href', texto: 'Node.js', enlace: 'https://nodejs.org/' },
+      {
+        tipo: 'href',
+        texto: 'motor de JavaScript V8 de Chrome',
+        enlace: 'https://developers.google.com/v8/',
+      },
+    ]);
   });
 
+  test('debe lanzar un error si el archivo no existe', () => {
+    expect(() => obtenerTipoContenido('./ruta/inexistente.md')).toThrow('El archivo no existe');
+  });
 });
+
+
