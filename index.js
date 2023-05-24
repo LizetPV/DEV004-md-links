@@ -8,7 +8,7 @@ import axios from 'axios';
 import path from 'path';
 import fs from 'fs';
 
-const rutaArchivo = './PRUEBAS/ejemplo.md';
+const rutaArchivo = './PRUEBAS/ejemplo.md'; // funcion que me muestra las rutas de los archivos
 
 if (fs.existsSync(rutaArchivo)) {
   const contenido = fs.readFileSync(rutaArchivo, 'utf-8');
@@ -37,7 +37,7 @@ if (fs.existsSync(rutaArchivo)) {
   console.log(chalk.bgRed('El archivo no existe'));
 }
 
-leerArchivo(rutaArchivo, (error, data) => {
+ leerArchivo(rutaArchivo, (error, data) => { // funcion que me muestra unicamente las url de un archivo
 
   if (error) {
     console.error(error);
@@ -51,23 +51,25 @@ leerArchivo(rutaArchivo, (error, data) => {
     const enlace = match[2];
     validarURL(enlace);
   }
-});
+}); 
 
-function validarURL(url) {
+ function validarURL(url) {
   axios.get(url)
     .then(response => {
       if (response.status === 200) {
         console.log(chalk.bold.white.bgGreen`${url} está en buen estado`);
       } else {
         console.log(chalk.bgRed`${url} está rota`);
+        cantidadRotos++;
       }
     })
     .catch(error => {
       console.error(chalk.bgRed`Error al validar ${url}: ${error.message}`);
+      cantidadRotos++;
     });
-}
+} 
 
-const ruta = './PRUEBAS/ejemplo.md';
+const ruta = './PRUEBAS/ejemplo.md'; // funcion de extension del archivo
 try {
   const extension = obtenerExtensionArchivo(ruta);
   console.log(chalk.bgMagenta`La extensión del archivo es: ${extension}`);
@@ -78,7 +80,7 @@ try {
 }
 
 
-const rutaDirectorio = './PRUEBAS';
+const rutaDirectorio = './PRUEBAS'; // funcion que me muestra el contenido de un directorio
 
 try {
   const contenido = obtenerContenidoDirectorio(rutaDirectorio);
@@ -86,4 +88,11 @@ try {
   console.log('---');
 } catch (error) {
   console.error(error);
-}
+} 
+
+export {
+  obtenerExtensionArchivo,
+  obtenerContenidoDirectorio,
+  validarURL,
+  leerArchivo
+};

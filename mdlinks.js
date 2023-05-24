@@ -1,4 +1,4 @@
-import path from 'path';
+/* import path from 'path'; */
 import { readFile } from 'fs';
 import { statSync } from 'fs';
 import { extname } from 'path';
