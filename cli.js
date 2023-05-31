@@ -37,6 +37,7 @@ const mdlinks = (ruta, options) => {
             link.estado = 'ok';
             link.codigo = statusCode;
             link.mensaje = statusText;
+            return link;
           })
           .catch((error) => {
             if (error.response) {
@@ -49,6 +50,7 @@ const mdlinks = (ruta, options) => {
               link.estado = 'fail';
               link.mensaje = error.message;
             }
+            return link;
           });
       });
 
@@ -64,6 +66,7 @@ const mdlinks = (ruta, options) => {
 };
 
 const imprimirLinks = (links, stats) => {
+  console.log({ links, stats })
   links.forEach((link) => {
     console.log(chalk.white(`Archivo: ${link.archivo}`));
     console.log(chalk.cyan(`Enlace: ${link.enlace}`));

@@ -39,7 +39,7 @@ export function obtenerTipoContenido(rutaArchivo) {
   }
 }
 
-const leerArchivo = (rutaArchivo, callback) => {
+export function leerArchivo(rutaArchivo, callback) {
   readFile(rutaArchivo, 'utf8', (error, data) => {
     if (error) {
       callback(error);
@@ -52,7 +52,7 @@ const leerArchivo = (rutaArchivo, callback) => {
 
 export default leerArchivo;
 
-export const obtenerExtensionArchivo = (ruta) => {
+export function obtenerExtensionArchivo(ruta){
   try {
     const stats = statSync(ruta);
     if (stats.isFile()) {
@@ -68,7 +68,7 @@ export const obtenerExtensionArchivo = (ruta) => {
 };
  
 
-export const obtenerContenidoDirectorio = (rutaDirectorio) => {
+export function obtenerContenidoDirectorio(rutaDirectorio){
   try {
     const contenido = readdirSync(rutaDirectorio);
     return contenido;

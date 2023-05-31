@@ -8,7 +8,7 @@ import axios from 'axios';
 import path from 'path';
 import fs from 'fs';
 
-const rutaArchivo = './PRUEBAS/ejemplo.md'; // funcion que me muestra las rutas de los archivos
+const rutaArchivo = './PRUEBAS/PRUEBATEST.MD'; // funcion que me muestra las rutas de los archivos
 
 if (fs.existsSync(rutaArchivo)) {
   const contenido = fs.readFileSync(rutaArchivo, 'utf-8');
