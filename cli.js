@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
 import chalk from 'chalk';
+import { log } from 'console';
 
 const rutaArchivo = './PRUEBAS/ejemplo.md'; // Ruta de un archivo markdown
 
@@ -55,35 +56,18 @@ const mdlinks = (ruta, options) => {
       });
 
       Promise.all(requests).then(() => {
-        imprimirLinks(links, stats);
+        imprimirLinks(links, validate, stats);
       });
     } else {
-      imprimirLinks(links, stats);
+      imprimirLinks(links, validate, stats);
     }
   } else {
     console.log(chalk.red('El archivo no existe'));
   }
 };
 
-const imprimirLinks = (links, stats) => {
-  console.log({ links, stats })
-  links.forEach((link) => {
-    console.log(chalk.white(`Archivo: ${link.archivo}`));
-    console.log(chalk.cyan(`Enlace: ${link.enlace}`));
-    console.log(chalk.yellow(`Texto: ${link.texto}`));
-    if (link.estado) {
-      if (link.estado === 'ok') {
-        console.log(chalk.bgGreen(`Estado: ${link.estado}`));
-      } else {
-        console.log(chalk.bgRed(`Estado: ${link.estado}`));
-      }
-      console.log(chalk.blue(`Código: ${link.codigo}`));
-      console.log(chalk.magenta(`Mensaje: ${link.mensaje}`));
-    }
-    console.log('---');
-  });
-
-  if (stats) {
+const imprimirLinks = (links, validate, stats) => {
+  if (validate && stats) {// condicional de --validate --stats
     const total = links.length;
     const unicos = obtenerLinksUnicos(links);
     const rotos = obtenerLinksRotos(links);
@@ -91,6 +75,30 @@ const imprimirLinks = (links, stats) => {
     console.log(chalk.bold(`Total: ${total}`));
     console.log(chalk.bold(`Únicos: ${unicos}`));
     console.log(chalk.bold(`Rotos: ${rotos}`));
+
+  } else if (validate && !stats) { // condicional de  --validate
+    links.forEach((link) => {
+      console.log(chalk.white(`Archivo: ${link.archivo}`));
+      console.log(chalk.cyan(`Enlace: ${link.enlace}`));
+      console.log(chalk.yellow(`Texto: ${link.texto}`));
+      if (link.estado) {
+        if (link.estado === 'ok') {
+          console.log(chalk.bgGreen(`Estado: ${link.estado}`));
+        } else {
+          console.log(chalk.bgRed(`Estado: ${link.estado}`));
+        }
+        console.log(chalk.blue(`Código: ${link.codigo}`));
+        console.log(chalk.magenta(`Mensaje: ${link.mensaje}`));
+      }
+      console.log('---');
+    });
+  } else if (!validate && stats) { // condicional de --stats
+    const total = links.length;
+    const unicos = obtenerLinksUnicos(links);
+   
+    console.log(chalk.bold(`Total: ${total}`));
+    console.log(chalk.bold(`Únicos: ${unicos}`));
+    
   }
 };
 
@@ -112,4 +120,4 @@ const obtenerLinksRotos = (links) => {
   return rotos;
 };
 
-mdlinks(rutaArchivo, ['--validate', '--stats']);
+mdlinks(process.argv[2], process.argv.slice(2));

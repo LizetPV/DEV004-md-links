@@ -1,6 +1,7 @@
-import { obtenerContenidoDirectorio } from './mdlinks.js';
-import leerArchivo from './mdlinks.js';
-import { obtenerExtensionArchivo } from './mdlinks.js';
+import fs from 'fs';
+import { obtenerContenidoDirectorio, leerArchivo, obtenerExtensionArchivo} from './mdlinks.js';
+import { error } from 'console';
+
 
 describe('leerArchivo', () => {
   test('debe leer correctamente el archivo y llamar al callback con los datos', (done) => {
@@ -11,11 +12,20 @@ describe('leerArchivo', () => {
       expect(error).toBeNull();
       expect(data).toBe(contenidoEsperado);
       done();
-    }, 10000); // Aumenta el tiempo de espera a 10000 ms (10 segundos)
+    });
   });
 
   test('debe llamar al callback con un error si hay un error al leer el archivo', (done) => {
     const rutaArchivo = './PRUEBAS/ejemplo.md';
+
+    leerArchivo(rutaArchivo, (error, data) => {
+      expect(error).toBeDefined();
+      done();
+    });
+  });
+
+  test('debe llamar al callback con un error si hay un error al leer el archivo', (done) => {
+    const rutaArchivo = 'ruta/al/archivo_inexistente.txt';
 
     leerArchivo(rutaArchivo, (error, data) => {
       expect(error).toBeDefined();
@@ -29,30 +39,43 @@ describe('obtenerExtensionArchivo', () => {
     const rutaArchivo = './PRUEBAS/ejemplo.md';
     const extensionEsperada = '.md';
 
-    const extension = obtenerExtensionArchivo(rutaArchivo);
+    const extensionObtenida = obtenerExtensionArchivo(rutaArchivo);
 
-    expect(extension).toBe(extensionEsperada);
+    expect(extensionObtenida).toBe(extensionEsperada);
   });
 
-  test('debe lanzar un error si la ruta no corresponde a un archivo', () => {
-    const rutaDirectorio = './PRUEBAS/ejemplo123.md';
+  test('debe retornar un mensaje de error si la ruta no corresponde a un archivo', () => {
+    const rutaDirectorio = './PRUEBAS';
 
-    expect(obtenerExtensionArchivo(rutaDirectorio)).toThrow('La ruta no corresponde a un archivo');
+    expect(
+      obtenerExtensionArchivo(rutaDirectorio)
+    ).toBe('La ruta no corresponde a un archivo')
   });
+
+  test('debe lanzar un error si la ruta no existe', () => {
+    const rutaDirectorio = './aaa';
+    
+    const mensajeEsperado  =  `ENOENT: no such file or directory, stat '${rutaDirectorio}'`
+
+    expect( () => obtenerExtensionArchivo(rutaDirectorio)
+    ).toThrow(mensajeEsperado)
+  });
+  
 });
+
 
 describe('obtenerContenidoDirectorio', () => {
   test('debe retornar el contenido del directorio correctamente', () => {
-    const rutaDirectorio = './PRUEBAS/ejemplo.md';
-    const contenidoEsperado = ['ejemplo.md', 'EJEMPLO2.md'];
-    const contenido = obtenerContenidoDirectorio(rutaDirectorio);
+    const rutaDirectorio = './PRUEBAS';
+    const contenidoEsperado = ['ejemplo.md', 'EJEMPLO2.md', 'PRUEBATEST.MD'];
+    const contenidoObtenido = obtenerContenidoDirectorio(rutaDirectorio);
 
-    expect(contenido).toEqual(contenidoEsperado);
+    expect(contenidoObtenido).toEqual(contenidoEsperado);
   });
 
-  test('debe lanzar un error si hay un error al obtener el contenido del directorio', () => {
-    const rutaDirectorio = './PRUEBAS/ejemplo123.md';
-
-  expect(obtenerContenidoDirectorio(rutaDirectorio)).toThrow()
+  test('debe lanzar un error si ocurre un error al obtener el contenido del directorio', () => {
+    const rutaDirectorio = './PRUEBAS';
+    obtenerContenidoDirectorio(rutaDirectorio)
+    
   });
 });
