@@ -36,7 +36,7 @@ if (fs.existsSync(rutaArchivo)) {
 } else {
   console.log(chalk.bgRed('El archivo no existe'));
 }
-
+// busca si existe una coicidencia de enlaces  dentro de su contenido y guarda cada url en la funcion validar url
  leerArchivo(rutaArchivo, (error, data) => { // funcion que me muestra unicamente las url de un archivo
 
   if (error) {
@@ -52,7 +52,8 @@ if (fs.existsSync(rutaArchivo)) {
     validarURL(enlace);
   }
 }); 
-
+// utiliza axios para hacer una solicitud get a una url , maneja la respuesta y los posibles errores . Dependiendo del estado de 
+//respuesta se imprime
  function validarURL(url) {
   axios.get(url)
     .then(response => {
@@ -68,7 +69,7 @@ if (fs.existsSync(rutaArchivo)) {
       cantidadRotos++;
     });
 } 
-
+// obtiene la extension del archivo, imprime la extension; si se produce un error captura el error y lo imprime
 const ruta = './PRUEBAS/ejemplo.md'; // funcion de extension del archivo
 try {
   const extension = obtenerExtensionArchivo(ruta);
@@ -79,7 +80,7 @@ try {
   console.error(error);
 }
 
-
+// obtiene el contenido del directorio y lo imprime, si se produce algun error tambien captura el error y lo imprime
 const rutaDirectorio = './PRUEBAS'; // funcion que me muestra el contenido de un directorio
 
 try {

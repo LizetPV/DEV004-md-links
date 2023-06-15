@@ -4,8 +4,12 @@ import axios from 'axios';
 import chalk from 'chalk';
 import { log } from 'console';
 
+
 const rutaArchivo = './PRUEBAS/ejemplo.md'; // Ruta de un archivo markdown
 
+
+// define la ruta markdow que se va a procesar, verifica valide y stats si es true , que finalmente espera
+//cumplir la promesa para imprimir los links
 const mdlinks = (ruta, options) => {
   const validate = options.includes('--validate');
   const stats = options.includes('--stats');
@@ -66,6 +70,7 @@ const mdlinks = (ruta, options) => {
   }
 };
 
+//se encarga de mostrar los resultados de los enlaces de acuerdo a las opciones validate y stats
 const imprimirLinks = (links, validate, stats) => {
   if (validate && stats) {// condicional de --validate --stats
     const total = links.length;
@@ -102,6 +107,7 @@ const imprimirLinks = (links, validate, stats) => {
   }
 };
 
+//cuenta la cantidad de enlaces unicos
 const obtenerLinksUnicos = (links) => {
   const enlacesUnicos = new Set();
   links.forEach((link) => {
@@ -109,7 +115,7 @@ const obtenerLinksUnicos = (links) => {
   });
   return enlacesUnicos.size;
 };
-
+//cuenta la cantidad de enlaces rotos
 const obtenerLinksRotos = (links) => {
   let rotos = 0;
   links.forEach((link) => {
